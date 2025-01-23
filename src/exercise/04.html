@@ -2,6 +2,7 @@
 <!-- http://localhost:3000/isolated/exercise/04.html -->
 
 <body>
+
   <div id="root"></div>
   <script src="https://unpkg.com/react@18.1.0/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18.1.0/umd/react-dom.development.js"></script>
@@ -9,16 +10,131 @@
   <script type="text/babel">
     // 🐨 Make a function called `message` which returns the JSX we want to share
 
+    function message({children}) {
+      return <div className="message">{children}</div>
+    }
+
     // 🐨 use that function in place of the divs below with:
     // 💰 {message({children: 'Hello World'})} {message({children: 'Goodbye World'})}
     const element = (
       <div className="container">
-        <div className="message">Hello World</div>
-        <div className="message">Goodbye World</div>
+        {message({children: 'Hello World'})}
+        {message({children: 'Goodbye World'})}
       </div>
     )
 
     // 💯 This is only the first step to making actual React components. The rest is in the extra credit!
     ReactDOM.createRoot(document.getElementById('root')).render(element)
+  </script>
+
+  <!-- Extra 1 -->
+  <div id="root-1"></div>
+  <script src="https://unpkg.com/react@18.1.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18.1.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.12.4/babel.js"></script>
+  <script type="text/babel">
+
+    function message({children}) {
+      return <div className="message">{children}</div>
+    }
+
+    const element = (
+      <div className="container">
+        {React.createElement(message, {children: 'Hello World 1'})}
+        {React.createElement(message, {children: 'Goodbye World 1'})}
+      </div>
+    )
+
+    ReactDOM.createRoot(document.getElementById('root-1')).render(element)
+  </script>
+
+
+  <!-- Extra 2 -->
+
+  <div id="root-2"></div>
+  <script src="https://unpkg.com/react@18.1.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18.1.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.12.4/babel.js"></script>
+  <script type="text/babel">
+
+    function Message({children}) {
+      return <div className="message">{children}</div>
+    }
+
+    const element = (
+        <div className="container">
+          <Message>Hello World 2</Message>
+          <Message>Goodbye World 2</Message>
+        </div>
+      )
+    ReactDOM.createRoot(document.getElementById('root-2')).render(element)
+  </script>
+
+  <!-- Extra 3 -->
+
+  <div id="root-3"></div>
+  <script src="https://unpkg.com/react@18.1.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18.1.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.12.4/babel.js"></script>
+  <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
+  <script type="text/babel">
+
+    // Ideally, we want to use typescript for this!!!
+    // const PropTypes = {
+    //   string(props, propName, componentName) {
+    //     if (typeof props[propName] !== 'string') {
+    //       return new Error(`Component ${componentName} expects an input of type String for ${propName}`)
+    //     }
+    //   },
+    // }
+
+    // isRequired provided by prop-types library
+    Message.propTypes = {
+      subject: PropTypes.string.isRequired,
+      greeting: PropTypes.string.isRequired,
+    }
+
+    function Message({subject, greeting}) {
+      return <div className="message">{greeting}, {subject}</div>
+    }
+
+    // react.development.js:197 Warning: Failed prop type: Component Message expects an input of type String for greeting at Message (<anonymous>:16:22)
+    // Warning: Failed prop type: The prop `subject` is marked as required in `Message`, but its value is `undefined`. at Message (<anonymous>:18:22)
+    const element = (
+      <div className="container">
+        <Message subject="World 3" greeting={2}/>
+        <Message greeting="Goodbye"/>
+      </div>
+    )
+    ReactDOM.createRoot(document.getElementById('root-3')).render(element)
+  </script>
+
+  <!-- Extra 5 -->
+
+  <div id="root-5"></div>
+  <script src="https://unpkg.com/react@18.1.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18.1.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.12.4/babel.js"></script>
+  <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
+  <script type="text/babel">
+
+    Message.propTypes = {
+      subject: PropTypes.string.isRequired,
+      greeting: PropTypes.string.isRequired,
+    }
+
+    function Message({subject, greeting}) {
+      return <div className="message">{greeting}, {subject}</div>
+    }
+
+    // <React.Fragment> === <>...</> | <Fragment>, often used via <>...</> syntax, lets you group elements without a wrapper node.
+    const element = (
+      <>
+        <Message subject="World 5" greeting="Hello"/>
+        <Message subject="World 5" greeting="Goodbye"/>
+      </>
+
+    )
+    ReactDOM.createRoot(document.getElementById('root-5')).render(element)
   </script>
 </body>
